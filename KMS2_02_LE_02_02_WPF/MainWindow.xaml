@@ -1,0 +1,51 @@
+﻿<Window x:Class="KMS2_02_LE_02_02_WPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KMS2_02_LE_02_02_WPF"
+        mc:Ignorable="d"
+        Title="SQL and XML Database Application" Height="450" Width="800" ResizeMode="NoResize" Background="#E0F7FA" >
+
+    <Grid>
+        <DataGrid x:Name="dataGridView" 
+                  HorizontalAlignment="Left" 
+                  Height="287" 
+                  Margin="180,106,0,0" 
+                  VerticalAlignment="Top" 
+                  Width="580" 
+                  AutoGenerateColumns="False" 
+                  CanUserAddRows="False" 
+                  Style="{StaticResource ModernDataGridStyle}"
+                  HeadersVisibility="Column"
+                  RowHeaderWidth="0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="35" IsReadOnly="True"/>
+                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="100"/>
+                <DataGridTextColumn Header="Surname" Binding="{Binding Surname}" Width="100"/>
+                <DataGridTextColumn Header="Gender" Binding="{Binding Gender}" Width="69"/>
+                <DataGridTextColumn Header="Age" Binding="{Binding Age}" Width="40"/>
+                <DataGridTextColumn Header="Zip" Binding="{Binding Zip}" Width="55"/>
+                <DataGridTextColumn Header="City" Binding="{Binding City}" Width="90*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+
+
+        <Button x:Name="btnApplyFilter" Content="Apply Filter" HorizontalAlignment="Left" Margin="18,49,0,0" VerticalAlignment="Top" Click="ApplyFilterButton_Click" Style="{StaticResource MainButtonStyle}"/>
+        <Button x:Name="btnLoadData" Content="Load Data" HorizontalAlignment="Left" Margin="18,141,0,0" VerticalAlignment="Top" Click="LoadDataButton_Click" Style="{StaticResource MainButtonStyle}"/>
+        <Button x:Name="btnSaveData" Content="Save Filtered Data" HorizontalAlignment="Left" Margin="18,237,0,0" VerticalAlignment="Top" Click="SaveFilteredDataButton_Click" Style="{StaticResource MainButtonStyle}"/>
+
+        <ComboBox x:Name="filterComboBox" HorizontalAlignment="Left" Margin="180,49,0,0" VerticalAlignment="Top" Width="120" Style="{StaticResource MainComboBoxStyle}">
+            <ComboBoxItem Content="Select Filter" IsSelected="True" IsEnabled="True"/>
+            <ComboBoxItem Content="City (Descending)"/>
+            <ComboBoxItem Content="Age (Ascending)"/>
+            <ComboBoxItem Content="Gender and Age (Descending)"/>
+            <ComboBoxItem Content="Name (Alphabetical)"/>
+            <ComboBoxItem Content="City with Age (35-55)"/>
+        </ComboBox>
+
+
+    </Grid>
+</Window>

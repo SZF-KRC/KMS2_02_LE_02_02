@@ -1,0 +1,15 @@
+﻿<Application x:Class="KMS2_02_LE_02_02_WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:KMS2_02_LE_02_02_WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles/ButtonStyles/ButtonMainStyles.xaml"/>
+                <ResourceDictionary Source="Styles/ComboBoxStyles/ComboBoxMainStyles.xaml"/>
+                <ResourceDictionary Source="Styles/DataGridStyles/DataGridMainStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
