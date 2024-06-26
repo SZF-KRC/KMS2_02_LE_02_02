@@ -1,5 +1,7 @@
 ﻿using KMS2_02_LE_02_02_WPF.Model;
 using MySql.Data.MySqlClient;
+using System;
+using System.Windows;
 
 namespace KMS2_02_LE_02_02_WPF.SaveData
 {
@@ -19,19 +21,26 @@ namespace KMS2_02_LE_02_02_WPF.SaveData
         /// <param name="person">The person object containing the data to be saved.</param>
         public static void SaveDataToDatabase(Person person)
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                MySqlCommand cmd = new MySqlCommand("UPDATE person SET Name = @Name, Surname = @Surname, Gender = @Gender, Age = @Age, Zip = @Zip, City = @City WHERE ID = @Id", connection);
-                cmd.Parameters.AddWithValue("@ID", person.Id);
-                cmd.Parameters.AddWithValue("@Name", person.Name);
-                cmd.Parameters.AddWithValue("@Surname", person.Surname);
-                cmd.Parameters.AddWithValue("@Gender", person.Gender);
-                cmd.Parameters.AddWithValue("@Age", person.Age);
-                cmd.Parameters.AddWithValue("@Zip", person.Zip);
-                cmd.Parameters.AddWithValue("@City", person.City);
-                cmd.ExecuteNonQuery();
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    MySqlCommand cmd = new MySqlCommand("UPDATE person SET Name = @Name, Surname = @Surname, Gender = @Gender, Age = @Age, Zip = @Zip, City = @City WHERE ID = @Id", connection);
+                    cmd.Parameters.AddWithValue("@ID", person.Id);
+                    cmd.Parameters.AddWithValue("@Name", person.Name);
+                    cmd.Parameters.AddWithValue("@Surname", person.Surname);
+                    cmd.Parameters.AddWithValue("@Gender", person.Gender);
+                    cmd.Parameters.AddWithValue("@Age", person.Age);
+                    cmd.Parameters.AddWithValue("@Zip", person.Zip);
+                    cmd.Parameters.AddWithValue("@City", person.City);
+                    cmd.ExecuteNonQuery();
+                }
             }
+            catch (MySqlException ex) { MessageBox.Show($"MySQL Error: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);}
+            catch (InvalidOperationException ex) { MessageBox.Show($"Invalid Operation: {ex.Message}", "Operation Error", MessageBoxButton.OK, MessageBoxImage.Warning);}
+            catch (TimeoutException ex){ MessageBox.Show($"Timeout: {ex.Message}", "Timeout Error", MessageBoxButton.OK, MessageBoxImage.Warning);}
+            catch (Exception ex) {MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);}
         }
     }
 }

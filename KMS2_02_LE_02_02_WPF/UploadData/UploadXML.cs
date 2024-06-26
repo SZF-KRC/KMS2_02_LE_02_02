@@ -1,6 +1,8 @@
 ﻿using KMS2_02_LE_02_02_WPF.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Windows;
 using System.Xml.Serialization;
 
 namespace KMS2_02_LE_02_02_WPF.UploadData
@@ -17,13 +19,19 @@ namespace KMS2_02_LE_02_02_WPF.UploadData
         /// <returns>A list of <see cref="Person"/> objects containing the data from the XML file.</returns>
         public static List<Person> LoadDataFromXML(string filePath)
         {
-            List<Person> persons;
-            XmlSerializer serializer = new XmlSerializer(typeof(List<Person>));
-            using (FileStream fs = new FileStream(filePath, FileMode.Open))
+            try
             {
-                persons = (List<Person>)serializer.Deserialize(fs);
+                List<Person> persons;
+                XmlSerializer serializer = new XmlSerializer(typeof(List<Person>));
+                using (FileStream fs = new FileStream(filePath, FileMode.Open))
+                {
+                    persons = (List<Person>)serializer.Deserialize(fs);
+                }
+                return persons;
             }
-            return persons;
+            catch (InvalidOperationException e) { MessageBox.Show($"Data Error: {e.Message}", "Invalid Operation Exception", MessageBoxButton.OK, MessageBoxImage.Error); ; }
+            catch (Exception ex) { MessageBox.Show($"Data Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            return null;
         }
     }
 }

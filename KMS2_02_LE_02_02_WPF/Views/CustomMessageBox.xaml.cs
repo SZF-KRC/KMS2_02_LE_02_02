@@ -1,13 +1,11 @@
 ﻿using KMS2_02_LE_02_02_WPF.Styles;
 using System.Windows;
 
-namespace KMS2_02_LE_02_02_WPF
+namespace KMS2_02_LE_02_02_WPF.Views
 {
     public partial class CustomMessageBox : Window
     {
   
-
-
         public DataSourceOption Result { get; private set; }
 
         public CustomMessageBox(string message)

@@ -17,7 +17,7 @@ namespace KMS2_02_LE_02_02_WPF.Manager
         /// <param name="e">The event arguments containing information about the cell edit.</param>
         /// <param name="persons">The list of persons displayed in the DataGrid.</param>
         /// <param name="dataSource">The data source type (SQL or XML).</param>
-        /// <param name="xmlFilePath">The file path of the XML file if the data source is XML.</param
+        /// <param name="xmlFilePath">The file path of the XML file if the data source is XML.</param>
         public static void UpdatePersonData(DataGridCellEditEndingEventArgs e, List<Person> persons, string dataSource, string xmlFilePath)
         {
             var column = e.Column as DataGridBoundColumn;
@@ -30,41 +30,33 @@ namespace KMS2_02_LE_02_02_WPF.Manager
                     var element = e.EditingElement as TextBox;
                     if (editedPerson != null && element != null)
                     {
+                        string inputValue = element.Text.Trim();
+
+                        if (!FailManager.ValidateInput(bindingPath, inputValue, editedPerson))
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
+
                         switch (bindingPath)
                         {
                             case "Name":
-                                editedPerson.Name = element.Text;
+                                editedPerson.Name = inputValue;
                                 break;
                             case "Surname":
-                                editedPerson.Surname = element.Text;
+                                editedPerson.Surname = inputValue;
                                 break;
                             case "Gender":
-                                editedPerson.Gender = element.Text;
+                                editedPerson.Gender = inputValue;
                                 break;
                             case "Age":
-                                if (int.TryParse(element.Text, out int age))
-                                {
-                                    editedPerson.Age = age;
-                                }
-                                else
-                                {
-                                    FailManager.NotifyInvalidInput("Age must be an integer.");
-                                    return;
-                                }
+                                editedPerson.Age = int.Parse(inputValue);
                                 break;
                             case "Zip":
-                                if (int.TryParse(element.Text, out int zip))
-                                {
-                                    editedPerson.Zip = zip;
-                                }
-                                else
-                                {
-                                    FailManager.NotifyInvalidInput("Zip must be an integer.");
-                                    return;
-                                }
+                                editedPerson.Zip = int.Parse(inputValue);
                                 break;
                             case "City":
-                                editedPerson.City = element.Text;
+                                editedPerson.City = inputValue;
                                 break;
                         }
 

@@ -12,6 +12,8 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="HorizontalGridLinesBrush" Value="#B2EBF2"/>
         <Setter Property="VerticalGridLinesBrush" Value="#B2EBF2"/>
+        <Setter Property="CanUserResizeColumns" Value="False"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
         <Setter Property="CellStyle">
             <Setter.Value>
                 <Style TargetType="DataGridCell">

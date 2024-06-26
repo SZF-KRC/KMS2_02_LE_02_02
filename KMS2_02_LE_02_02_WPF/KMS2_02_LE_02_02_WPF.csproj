@@ -113,7 +113,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="CustomMessageBox.xaml.cs">
+    <Compile Include="Views\CustomMessageBox.xaml.cs">
       <DependentUpon>CustomMessageBox.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manager\FailManager.cs" />
@@ -124,14 +124,15 @@
     <Compile Include="SaveData\SaveSQL.cs" />
     <Compile Include="SaveData\SaveTXT.cs" />
     <Compile Include="SaveData\SaveXML.cs" />
+    <Compile Include="Styles\DataGridPicture.cs" />
     <Compile Include="Styles\DataSourceOption.cs" />
     <Compile Include="UploadData\UploadSQL.cs" />
     <Compile Include="UploadData\UploadXML.cs" />
-    <Page Include="CustomMessageBox.xaml">
+    <Page Include="Views\CustomMessageBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -139,7 +140,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -189,5 +190,14 @@
   <ItemGroup>
     <Resource Include="Styles\Images\Acon.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\Images\btnopen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Styles\Images\D.png" />
+    <Resource Include="Styles\Images\M.png" />
+    <Resource Include="Styles\Images\W.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

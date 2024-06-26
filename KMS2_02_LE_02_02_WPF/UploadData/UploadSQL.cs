@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.Windows;
 
 namespace KMS2_02_LE_02_02_WPF.UploadData
 {
@@ -27,31 +28,40 @@ namespace KMS2_02_LE_02_02_WPF.UploadData
         /// <returns>A list of <see cref="Person"/> objects containing the data from the SQL database.</returns>
         public static List<Person> LoadDataFromDatabase()
         {
-            sqlData.Clear();
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            try
             {
-                connection.Open();
-                MySqlDataAdapter adapterSQL = new MySqlDataAdapter("SELECT * FROM person", connection);
-                DataTable data = new DataTable();
-                adapterSQL.Fill(data);
-
-                foreach (DataRow row in data.Rows)
+                sqlData.Clear();
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
                 {
-                    Person person = new Person
-                    {
-                        Id = Convert.ToInt32(row["ID"]),
-                        Name = row["Name"].ToString(),
-                        Surname = row["Surname"].ToString(),
-                        Gender = row["Gender"].ToString(),
-                        Age = Convert.ToInt32(row["Age"]),
-                        Zip = Convert.ToInt32(row["Zip"]),
-                        City = row["City"].ToString()
-                    };
-                    sqlData.Add(person);
-                }
+                    connection.Open();
+                    MySqlDataAdapter adapterSQL = new MySqlDataAdapter("SELECT * FROM person", connection);
+                    DataTable data = new DataTable();
+                    adapterSQL.Fill(data);
 
-                return sqlData;
+                    foreach (DataRow row in data.Rows)
+                    {
+                        Person person = new Person
+                        {
+                            Id = Convert.ToInt32(row["ID"]),
+                            Name = row["Name"].ToString(),
+                            Surname = row["Surname"].ToString(),
+                            Gender = row["Gender"].ToString(),
+                            Age = Convert.ToInt32(row["Age"]),
+                            Zip = Convert.ToInt32(row["Zip"]),
+                            City = row["City"].ToString()
+                        };
+                        sqlData.Add(person);
+                    }
+
+                    return sqlData;
+                }
             }
+            catch (DataException ex) { MessageBox.Show($"Data Error: {ex.Message}", "Data Exception", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (TimeoutException ex) { MessageBox.Show($"SQL Error: {ex.Message}", "Timeout Exception", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (InvalidOperationException ex) { MessageBox.Show($"SQL Error: {ex.Message}", "Invalid Operation Exception", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (MySqlException ex) { MessageBox.Show($"SQL Error: {ex.Message}", "SQL Exception", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (Exception ex) { MessageBox.Show($"Data Error: {ex.Message}", "Exception", MessageBoxButton.OK, MessageBoxImage.Error); }
+            return null;
         }
     }
 }

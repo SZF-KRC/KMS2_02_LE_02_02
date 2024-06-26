@@ -1,4 +1,5 @@
-﻿using KMS2_02_LE_02_02_WPF.Manager;
+﻿using DocumentFormat.OpenXml.Office2010.CustomUI;
+using KMS2_02_LE_02_02_WPF.Manager;
 using KMS2_02_LE_02_02_WPF.Model;
 using KMS2_02_LE_02_02_WPF.SaveData;
 using KMS2_02_LE_02_02_WPF.Styles;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace KMS2_02_LE_02_02_WPF
+namespace KMS2_02_LE_02_02_WPF.Views
 {
     public partial class MainWindow : Window
     {
@@ -33,6 +34,7 @@ namespace KMS2_02_LE_02_02_WPF
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadDataButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearImage();
             DataSourceOption result = CustomMessageBox.Show("Choose Data Source:");
 
             if (result == DataSourceOption.SQLData)
@@ -66,6 +68,7 @@ namespace KMS2_02_LE_02_02_WPF
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveFilteredDataButton_Click(object sender, RoutedEventArgs e)
         {
+            ClearImage();
             if (persons != null)
             {
                 SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -86,20 +89,24 @@ namespace KMS2_02_LE_02_02_WPF
             
         }
 
+        private void ClearImage() { if(genderImage != null) { genderImage.Source = null; } }
+
         /// <summary>
-        /// Handles the Click event of the ApplyFilterButton control.
+        /// Handles the SelectionChanged event of the filterComboBox.
         /// Applies the selected filter to the data grid.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void ApplyFilterButton_Click(object sender, RoutedEventArgs e)
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void FilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ClearImage();
             if (filterComboBox.SelectedItem is ComboBoxItem selectedItem)
             {
                 string filter = selectedItem.Content.ToString();
                 FilterManager.ApplyFilter(filter, persons, dataGridView);
             }
         }
+
 
         /// <summary>
         /// Handles the CellEditEnding event of the dataGridView control.
@@ -113,6 +120,20 @@ namespace KMS2_02_LE_02_02_WPF
             {
                 UpdateDataGridManager.UpdatePersonData(e, persons, dataSource, xmlFilePath);
             }
-        }  
+        }
+
+        /// <summary>
+        /// Handles the SelectionChanged event of the dataGridView control.
+        /// Updates the image based on the selected person's gender.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void DataGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dataGridView.SelectedItem is Person selectedPerson)
+            {
+                DataGridPicture.UpdateGenderImage(selectedPerson, genderImage);
+            }
+        }
     }
 }
