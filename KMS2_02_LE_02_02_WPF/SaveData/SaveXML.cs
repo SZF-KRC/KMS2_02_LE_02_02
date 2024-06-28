@@ -32,5 +32,23 @@ namespace KMS2_02_LE_02_02_WPF.SaveData
             catch (InvalidOperationException ex){MessageBox.Show($"Serialization Error: {ex.Message}", "Serialization Error", MessageBoxButton.OK, MessageBoxImage.Error);}
             catch (Exception ex){MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
         }
+
+        public static void DeleteDataFromXML(List<Person> persons, int personId, string xmlFilePath)
+        {
+            try
+            {
+                var personToRemove = persons.Find(p => p.Id == personId);
+                if (personToRemove != null)
+                {
+                    persons.Remove(personToRemove);
+                    SaveDataToXML(persons, xmlFilePath);
+                }
+            }
+            catch (IOException ex) { MessageBox.Show($"I/O Error: {ex.Message}", "File Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (UnauthorizedAccessException ex) { MessageBox.Show($"Access Denied: {ex.Message}", "Permission Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (InvalidOperationException ex) { MessageBox.Show($"Serialization Error: {ex.Message}", "Serialization Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (Exception ex) { MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+
     }
 }

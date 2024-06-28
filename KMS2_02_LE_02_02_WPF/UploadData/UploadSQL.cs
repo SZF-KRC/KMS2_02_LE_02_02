@@ -15,7 +15,7 @@ namespace KMS2_02_LE_02_02_WPF.UploadData
         /// <summary>
         /// The connection string used to connect to the SQL database.
         /// </summary>
-        private static string connectionString = "Server=localhost;Database=person_manager;Uid=root;Pwd=Krc6130;";
+        private static readonly string connectionString = "Server=localhost;Database=person_manager;Uid=root;Pwd=Krc6130;";
 
         /// <summary>
         /// A list to store the person data retrieved from the SQL database.

@@ -1,5 +1,4 @@
-﻿using DocumentFormat.OpenXml.Office2010.CustomUI;
-using KMS2_02_LE_02_02_WPF.Manager;
+﻿using KMS2_02_LE_02_02_WPF.Manager;
 using KMS2_02_LE_02_02_WPF.Model;
 using KMS2_02_LE_02_02_WPF.SaveData;
 using KMS2_02_LE_02_02_WPF.Styles;
@@ -8,6 +7,7 @@ using Microsoft.Win32;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace KMS2_02_LE_02_02_WPF.Views
 {
@@ -119,6 +119,23 @@ namespace KMS2_02_LE_02_02_WPF.Views
             if (e.EditAction == DataGridEditAction.Commit)
             {
                 UpdateDataGridManager.UpdatePersonData(e, persons, dataSource, xmlFilePath);
+            }
+
+        }
+
+        private void DataGridView_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+            {
+                if (dataGridView.SelectedItem is Person personToDelete)
+                {
+                    // Assuming you have a data source type and XML file path
+                    string dataSource = "SQL"; // or "XML"
+                    string xmlFilePath = "path_to_your_file.xml";
+
+                    // Delete the selected person
+                    UpdateDataGridManager.DeletePersonData(personToDelete, (List<Person>)dataGridView.ItemsSource, dataSource, xmlFilePath);
+                }
             }
         }
 

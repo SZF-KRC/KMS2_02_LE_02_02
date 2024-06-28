@@ -42,5 +42,24 @@ namespace KMS2_02_LE_02_02_WPF.SaveData
             catch (TimeoutException ex){ MessageBox.Show($"Timeout: {ex.Message}", "Timeout Error", MessageBoxButton.OK, MessageBoxImage.Warning);}
             catch (Exception ex) {MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);}
         }
+
+        public static void DeleteDataFromDatabase(int personId)
+        {
+            try
+            {
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+                    MySqlCommand cmd = new MySqlCommand("DELETE FROM person WHERE ID = @Id", connection);
+                    cmd.Parameters.AddWithValue("@ID", personId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (MySqlException ex) { MessageBox.Show($"MySQL Error: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+            catch (InvalidOperationException ex) { MessageBox.Show($"Invalid Operation: {ex.Message}", "Operation Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (TimeoutException ex) { MessageBox.Show($"Timeout: {ex.Message}", "Timeout Error", MessageBoxButton.OK, MessageBoxImage.Warning); }
+            catch (Exception ex) { MessageBox.Show($"General Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error); }
+        }
+
     }
 }

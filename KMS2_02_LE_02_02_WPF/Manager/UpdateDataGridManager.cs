@@ -72,5 +72,23 @@ namespace KMS2_02_LE_02_02_WPF.Manager
                 }
             }
         }
+
+        public static void DeletePersonData(Person personToDelete, List<Person> persons, string dataSource, string xmlFilePath)
+        {
+            if (personToDelete != null)
+            {
+                persons.Remove(personToDelete);
+
+                if (dataSource == "SQL")
+                {
+                    SaveSQL.DeleteDataFromDatabase(personToDelete.Id);
+                }
+                else if (dataSource == "XML")
+                {
+                    SaveXML.DeleteDataFromXML(persons, personToDelete.Id, xmlFilePath);
+                }
+            }
+        }
+
     }
 }
